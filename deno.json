@@ -1,0 +1,13 @@
+{
+  "fmt": {
+    "useTabs": false,
+    "singleQuote": true,
+    "semiColons": true,
+    "indentWidth": 2
+  },
+  "lint": {
+    "rules": {
+      "exclude": ["no-empty-interface"]
+    }
+  }
+}
