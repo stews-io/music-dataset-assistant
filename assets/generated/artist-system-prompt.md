@@ -19,30 +19,22 @@ interface MusicArtistBase<ArtistType extends string> {
   artistType: ArtistType;
   // artistName: the artist's name
   artistName: string;
-  // artistStartDate: when the artist's career began
-  artistStartDate: DateTuple;
-  // artistRegions: regions the artist is associated with
-  artistRegions: Array<LocationTuple>;
-  // artistTags: a list of descriptive tags representive of the artist's style (omit words "hip-hop" and "rap" from all entries)
-  artistTags: Array<string>;
+  // artistStartDate: the earliest year the artist began working in the music industry
+  artistStartDate: number;
 }
 
 interface MusicArtistPerson {
   // personFullName: full legal name of person
   personFullName: string;
-  // personBirthDate: date person was born
-  personBirthDate: DateTuple;
-  // personBirthPlace: location person was born
+  // personBirthDate: year the person was born
+  personBirthDate: number;
+  // personBirthPlace: the most precise location where the person was born
   personBirthPlace: LocationTuple;
-  // personAliases: other names the person goes by
+  // personAliases: a complete and exhaustive list with zero omissions of aliases the person / artist goes by
   personAliases: Array<string>;
-  // personMusicArtist: music artist the person is a part of
-  personMusicGroups: Array<string>;
+  // personMusicActs: a complete and exhaustive list with zero omissions of music acts the person is a part of
+  personMusicActs: Array<string>;
 }
-
-type DateTuple =
-  | [year: number, month: number, day: number]
-  | [year: number, month: number];
 
 type LocationTuple = [country: string, state: string, city: string];
 ```

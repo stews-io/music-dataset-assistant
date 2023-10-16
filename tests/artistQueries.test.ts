@@ -17,23 +17,26 @@ Deno.test("Query MF Doom", async () => {
   assertEquals(mfDoomJson, {
     artistType: "individual",
     artistName: "MF Doom",
-    artistStartDate: [1988, 7],
-    artistRegions: [
-      ["United States", "New York", "Long Island"],
-      ["United Kingdom", "London", "Westminster"],
-    ],
-    artistTags: ["underground", "alternative", "abstract", "experimental"],
+    artistStartDate: 1988,
     artistPerson: {
       personFullName: "Daniel Dumile",
-      personBirthDate: [1971, 1, 9],
-      personBirthPlace: ["United Kingdom", "London", "Westminster"],
+      personBirthDate: 1971,
+      personBirthPlace: ["United Kingdom", "London", "Hammersmith"],
       personAliases: [
+        "MF Doom",
         "Zev Love X",
         "King Geedorah",
-        "Viktor Vaughn",
         "Metal Fingers",
+        "Viktor Vaughn",
+        "DOOM",
       ],
-      personMusicGroups: ["KMD"],
+      personMusicActs: [
+        "KMD",
+        "Madvillain",
+        "Danger Doom",
+        "JJ Doom",
+        "NehruvianDoom",
+      ],
     },
   });
 });
@@ -49,15 +52,13 @@ Deno.test("Query Kanye West", async () => {
   assertEquals(kanyeWestJson, {
     artistType: "individual",
     artistName: "Kanye West",
-    artistStartDate: [2001, 2],
-    artistRegions: [["United States", "Illinois", "Chicago"]],
-    artistTags: ["alternative", "experimental", "gospel"],
+    artistStartDate: 1996,
     artistPerson: {
       personFullName: "Kanye Omari West",
-      personBirthDate: [1977, 6, 8],
+      personBirthDate: 1977,
       personBirthPlace: ["United States", "Georgia", "Atlanta"],
-      personAliases: ["Yeezy", "Ye"],
-      personMusicGroups: [],
+      personAliases: ["Yeezy", "Ye", "Yeezus"],
+      personMusicActs: ["Kanye West"],
     },
   });
 });
@@ -70,20 +71,27 @@ Deno.test("Query Shabazz Palaces", async () => {
     userQuery: 'Calculate "Shabazz Palaces"',
   });
   console.log(shabazzPalacesJson);
-  // assertEquals(kanyeWestJson, {
-  //   artistType: "individual",
-  //   artistName: "Kanye West",
-  //   artistStartDate: [2001, 2],
-  //   artistRegions: [["United States", "Illinois", "Chicago"]],
-  //   artistTags: ["alternative", "experimental", "gospel"],
-  //   artistPerson: {
-  //     personFullName: "Kanye Omari West",
-  //     personBirthDate: [1977, 6, 8],
-  //     personBirthPlace: ["United States", "Georgia", "Atlanta"],
-  //     personAliases: ["Yeezy", "Ye"],
-  //     personMusicGroups: [],
-  //   },
-  // });
+  assertEquals(shabazzPalacesJson, {
+    artistType: "group",
+    artistName: "Shabazz Palaces",
+    artistStartDate: 2009,
+    artistMembers: [
+      {
+        personFullName: "Ishmael Butler",
+        personBirthDate: 1969,
+        personBirthPlace: ["United States", "Washington", "Seattle"],
+        personAliases: ["Butterfly", "Palaceer Lazaro"],
+        personMusicActs: ["Digable Planets", "Shabazz Palaces"],
+      },
+      {
+        personFullName: "Tendai Maraire",
+        personBirthDate: 1977,
+        personBirthPlace: ["Zimbabwe", "Harare", "Harare"],
+        personAliases: [],
+        personMusicActs: ["Shabazz Palaces"],
+      },
+    ],
+  });
 });
 
 interface QueryGptDataApi {
