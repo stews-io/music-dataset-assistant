@@ -9,5 +9,9 @@
     "rules": {
       "exclude": ["no-empty-interface"]
     }
+  },
+  "tasks": {
+    "generatePrompts": "deno run -A ./scripts/generatePrompts.ts",
+    "runTests": "deno test -A ./tests"
   }
 }
