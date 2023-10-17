@@ -1,5 +1,5 @@
 export interface CreateTestStepApi<
-  StepWorker extends (api: Record<string, unknown>) => any
+  StepWorker extends (api: Record<string, any>) => any
 > {
   testContext: Deno.TestContext;
   stepName: string;
