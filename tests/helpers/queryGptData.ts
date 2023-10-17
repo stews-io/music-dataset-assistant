@@ -1,6 +1,9 @@
 import { assertEquals } from "https://deno.land/std@0.204.0/assert/mod.ts";
 import { CreateTestStepApi, createTestStep, throwError } from "./general.ts";
 import * as Zod from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { assert } from "https://deno.land/std@0.204.0/assert/assert.ts";
+import { fail } from "https://deno.land/std@0.204.0/assert/fail.ts";
+import { AssertionError } from "https://deno.land/std@0.204.0/assert/assertion_error.ts";
 
 export interface CreateGptQueryTestStepApi<
   GptMessageData,
@@ -12,8 +15,8 @@ export interface CreateGptQueryTestStepApi<
       | "systemPrompt"
       | "dataItemSchema"
       | "numberOfResults"
-      | "getResultDistributionMap"
-      | "resultExpectedDistribution"
+      | "getDistributionMap"
+      | "expectedDistribution"
     > {}
 
 export function createGptQueryTestStep<
@@ -27,8 +30,8 @@ export function createGptQueryTestStep<
     systemPrompt,
     dataItemSchema,
     numberOfResults,
-    getResultDistributionMap,
-    resultExpectedDistribution,
+    getDistributionMap,
+    expectedDistribution,
   } = api;
   return createTestStep({
     stepWorker: testGptQuery<GptMessageData, ResultExpectedDistribution>,
@@ -39,8 +42,8 @@ export function createGptQueryTestStep<
       systemPrompt,
       dataItemSchema,
       numberOfResults,
-      getResultDistributionMap,
-      resultExpectedDistribution,
+      getDistributionMap,
+      expectedDistribution,
     },
   });
 }
@@ -52,8 +55,8 @@ interface TestGptQueryApi<
     QueryGptDataApi<GptMessageData>,
     "userQuery" | "systemPrompt" | "dataItemSchema" | "numberOfResults"
   > {
-  resultExpectedDistribution: ResultExpectedDistribution;
-  getResultDistributionMap: (
+  expectedDistribution: ResultExpectedDistribution;
+  getDistributionMap: (
     queriedGptData: Array<GptMessageData>
   ) => DistributionMap;
 }
@@ -67,8 +70,8 @@ async function testGptQuery<
     systemPrompt,
     dataItemSchema,
     numberOfResults,
-    getResultDistributionMap,
-    resultExpectedDistribution,
+    getDistributionMap,
+    expectedDistribution,
   } = api;
   const queriedGptData = await queryGptData({
     userQuery,
@@ -76,9 +79,59 @@ async function testGptQuery<
     dataItemSchema,
     numberOfResults,
   });
-  const resultDistributionMap = getResultDistributionMap(queriedGptData);
-  console.log(JSON.stringify(resultDistributionMap, null, 2));
-  // assertEquals(gptQueryResultJson, expectedResult);
+  const expectedDistributionMap =
+    expectedDistribution.reduce<ExpectedDistributionMap>(
+      (expectedDistributionMapResult, someExpectedItem, expectedItemIndex) => {
+        expectedDistributionMapResult[`${someExpectedItem.preferredValue}`] =
+          expectedItemIndex;
+        someExpectedItem.otherValues.forEach((someExpectedOtherValue) => {
+          expectedDistributionMapResult[`${someExpectedOtherValue}`] =
+            expectedItemIndex;
+        });
+        return expectedDistributionMapResult;
+      },
+      {}
+    );
+  const distributionMap = getDistributionMap(queriedGptData);
+  const expectedDistributionTotals = Object.entries(
+    distributionMap
+  ).reduce<ExpectedDistributionTotals>(
+    (
+      expectedDistributionTotalsResult,
+      [distributionItemKey, distributionItemTotal]
+    ) => {
+      expectedDistributionTotalsResult[
+        expectedDistributionMap[distributionItemKey]
+      ] += distributionItemTotal;
+      return expectedDistributionTotalsResult;
+    },
+    new Array(expectedDistribution.length).fill(0)
+  );
+  const distributionErrors: Array<string> = [];
+  expectedDistribution.forEach((someExpectedItem, expectedItemIndex) => {
+    const actualFrequency =
+      expectedDistributionTotals[expectedItemIndex] / numberOfResults;
+    const frequencyDelta = actualFrequency - someExpectedItem.minimumFrequency;
+    if (actualFrequency >= someExpectedItem.minimumFrequency) {
+      console.log(
+        `%c${someExpectedItem.preferredValue}: %c${actualFrequency} >= ${someExpectedItem.minimumFrequency} %c(+${frequencyDelta})`,
+        "color: green; font-weight: bold",
+        "font-style: normal",
+        "color: green; font-style: italic"
+      );
+    } else {
+      console.log(
+        `%c${someExpectedItem.preferredValue}: %c${actualFrequency} < ${someExpectedItem.minimumFrequency} %c(${frequencyDelta})`,
+        "color: red; font-weight: bold",
+        "font-style: normal",
+        "color: red; font-style: italic"
+      );
+      distributionErrors.push(someExpectedItem.preferredValue);
+    }
+  });
+  if (distributionErrors.length > 0) {
+    throw distributionErrors;
+  }
 }
 
 interface QueryGptDataApi<GptMessageData> {

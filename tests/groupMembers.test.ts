@@ -19,7 +19,7 @@ Deno.test("Query Music Group Members", async (testContext) => {
     testContext,
     systemPrompt: musicGroupMembersSystemPrompt,
     artistName: "Digital Underground",
-    resultExpectedDistribution: [
+    expectedDistribution: [
       {
         preferredValue: "Shock G",
         otherValues: [],
@@ -146,20 +146,19 @@ interface CreateGroupMembersTestStepApi
       { groupMembers: Array<string> },
       ExpectedDistribution<string>
     >,
-    "testContext" | "systemPrompt" | "resultExpectedDistribution"
+    "testContext" | "systemPrompt" | "expectedDistribution"
   > {
   artistName: string;
 }
 
 function createGroupMembersTestStep(api: CreateGroupMembersTestStepApi) {
-  const { testContext, systemPrompt, resultExpectedDistribution, artistName } =
-    api;
+  const { testContext, systemPrompt, expectedDistribution, artistName } = api;
   return createGptQueryTestStep({
     numberOfResults: 3,
     dataItemSchema: Zod.object({
       groupMembers: Zod.array(Zod.string()),
     }),
-    getResultDistributionMap: (someGptQueryData) =>
+    getDistributionMap: (someGptQueryData) =>
       someGptQueryData.reduce<Record<string, number>>(
         (result, someQueryData) => {
           someQueryData.groupMembers.forEach((someGroupMember) => {
@@ -172,7 +171,7 @@ function createGroupMembersTestStep(api: CreateGroupMembersTestStepApi) {
       ),
     testContext,
     systemPrompt,
-    resultExpectedDistribution,
+    expectedDistribution,
     stepName: artistName,
     userQuery: `Calculate "${artistName}"`,
   });
