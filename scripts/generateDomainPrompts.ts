@@ -1,14 +1,14 @@
 import { join as getJoinedPath } from "https://deno.land/std@0.204.0/path/mod.ts";
 
-generatePrompts({
+generateDomainPrompts({
   assetsDirectoryPath: "./assets",
 });
 
-interface GeneratePromptsApi {
+interface GenerateDomainPromptsApi {
   assetsDirectoryPath: string;
 }
 
-async function generatePrompts(api: GeneratePromptsApi) {
+async function generateDomainPrompts(api: GenerateDomainPromptsApi) {
   const { assetsDirectoryPath } = api;
   const sourceAssetsDirectoryPath = getJoinedPath(
     assetsDirectoryPath,
@@ -26,35 +26,35 @@ async function generatePrompts(api: GeneratePromptsApi) {
     baseSystemPromptFilePath
   );
   await Promise.all([
-    generateDomainSystemPrompt({
+    generateSystemPrompt({
       generatedAssetsDirectoryPath,
       baseSystemPromptText,
-      domainKey: "artist",
+      domainKey: "artistType",
       domainTypesPath: getJoinedPath(
         sourceAssetsDirectoryPath,
-        "./MusicArtist.ts"
+        "./GptMusicArtistType.ts"
       ),
     }),
-    generateDomainSystemPrompt({
+    generateSystemPrompt({
       generatedAssetsDirectoryPath,
       baseSystemPromptText,
-      domainKey: "discography",
+      domainKey: "groupMembers",
       domainTypesPath: getJoinedPath(
         sourceAssetsDirectoryPath,
-        "./MusicArtistDiscography.ts"
+        "./GptMusicGroupMembers.ts"
       ),
     }),
   ]);
 }
 
-interface GenerateDomainSystemPromptApi {
+interface GenerateSystemPromptApi {
   generatedAssetsDirectoryPath: string;
   baseSystemPromptText: string;
   domainKey: string;
   domainTypesPath: string;
 }
 
-async function generateDomainSystemPrompt(api: GenerateDomainSystemPromptApi) {
+async function generateSystemPrompt(api: GenerateSystemPromptApi) {
   const {
     generatedAssetsDirectoryPath,
     domainKey,

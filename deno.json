@@ -11,7 +11,7 @@
     }
   },
   "tasks": {
-    "generatePrompts": "deno run -A ./scripts/generatePrompts.ts",
+    "generateDomainPrompts": "deno run -A ./scripts/generateDomainPrompts.ts",
     "runTests": "deno test -A ./tests"
   }
 }
