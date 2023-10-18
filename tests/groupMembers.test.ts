@@ -15,195 +15,195 @@ Deno.test("Query Music Group Members", async (testContext) => {
   const musicGroupMembersSystemPrompt = await Deno.readTextFile(
     "./assets/generated/groupMembers-system-prompt.md"
   );
-  // await createGroupMembersTestStep({
-  //   testContext,
-  //   systemPrompt: musicGroupMembersSystemPrompt,
-  //   artistName: "Digital Underground",
-  //   expectedDistribution: [
-  //     {
-  //       preferredValue: "Shock G",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Chopmaster J",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Kenny-K",
-  //       otherValues: ["Kenny K"],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Money-B",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "DJ Fuze",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "2Pac",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Saafir",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Numskull",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Mystic",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "BINC",
-  //       otherValues: [],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Clee",
-  //       otherValues: ["Cleetis Mack"],
-  //       minimumFrequency: 1.0,
-  //     },
-  //     {
-  //       preferredValue: "Doctor Fink",
-  //       otherValues: [],
-  //       minimumFrequency: 0.5,
-  //     },
-  //     {
-  //       preferredValue: "Schmoovy-Schmoov",
-  //       otherValues: [],
-  //       minimumFrequency: 0.5,
-  //     },
-  //     {
-  //       preferredValue: "Bigg Money Odis",
-  //       otherValues: [],
-  //       minimumFrequency: 0.5,
-  //     },
-  //     {
-  //       preferredValue: "Metaphysical",
-  //       otherValues: [],
-  //       minimumFrequency: 0,
-  //     },
-  //     {
-  //       preferredValue: "Esinchill",
-  //       otherValues: [],
-  //       minimumFrequency: 0,
-  //     },
-  //     {
-  //       preferredValue: "DJ Nu-Stylez",
-  //       otherValues: [],
-  //       minimumFrequency: 0,
-  //     },
-  //   ],
-  // });
   await createGroupMembersTestStep({
     testContext,
     systemPrompt: musicGroupMembersSystemPrompt,
-    artistName: "Odd Future",
+    artistName: "Digital Underground",
     expectedDistribution: [
       {
-        preferredValue: "Tyler, The Creator",
+        preferredValue: "Shock G",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Hodgy",
-        otherValues: ["Hodgy Beats"],
-        minimumFrequency: 1,
-      },
-      {
-        preferredValue: "Earl Sweatshirt",
+        preferredValue: "Chopmaster J",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Domo Genesis",
+        preferredValue: "Kenny-K",
+        otherValues: ["Kenny K"],
+        minimumFrequency: 1.0,
+      },
+      {
+        preferredValue: "Money-B",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Mike G",
+        preferredValue: "DJ Fuze",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Frank Ocean",
+        preferredValue: "2Pac",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Left Brain",
+        preferredValue: "Saafir",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Syd",
-        otherValues: ["Syd Tha Kyd", "Syd tha Kyd"],
-        minimumFrequency: 1,
-      },
-      {
-        preferredValue: "Matt Martians",
+        preferredValue: "Numskull",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Jasper Dolphin",
+        preferredValue: "Mystic",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "L-Boy",
+        preferredValue: "BINC",
         otherValues: [],
-        minimumFrequency: 1,
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "Taco",
-        otherValues: ["Taco Bennett"],
-        minimumFrequency: 1,
+        preferredValue: "Clee",
+        otherValues: ["Cleetis Mack"],
+        minimumFrequency: 1.0,
       },
       {
-        preferredValue: "The Internet",
+        preferredValue: "Doctor Fink",
         otherValues: [],
         minimumFrequency: 0.5,
       },
       {
-        preferredValue: "Casey Veggies",
+        preferredValue: "Schmoovy-Schmoov",
         otherValues: [],
-        minimumFrequency: 0.25,
+        minimumFrequency: 0.5,
       },
       {
-        preferredValue: "Brandun DeShay",
+        preferredValue: "Bigg Money Odis",
         otherValues: [],
-        minimumFrequency: 0.25,
+        minimumFrequency: 0.5,
       },
       {
-        preferredValue: "The Super 3",
-        otherValues: ["The Jet Age of Tomorrow"],
-        minimumFrequency: 0,
-      },
-      {
-        preferredValue: "Hal Williams",
+        preferredValue: "Metaphysical",
         otherValues: [],
         minimumFrequency: 0,
       },
       {
-        preferredValue: "Na-kel Smith",
-        otherValues: ["Na'kel Smith", "Na-Kel", "Na-Kel Smith"],
+        preferredValue: "Esinchill",
+        otherValues: [],
+        minimumFrequency: 0,
+      },
+      {
+        preferredValue: "DJ Nu-Stylez",
+        otherValues: [],
         minimumFrequency: 0,
       },
     ],
   });
+  // await createGroupMembersTestStep({
+  //   testContext,
+  //   systemPrompt: musicGroupMembersSystemPrompt,
+  //   artistName: "Odd Future",
+  //   expectedDistribution: [
+  //     {
+  //       preferredValue: "Tyler, The Creator",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Hodgy",
+  //       otherValues: ["Hodgy Beats"],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Earl Sweatshirt",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Domo Genesis",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Mike G",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Frank Ocean",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Left Brain",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Syd",
+  //       otherValues: ["Syd Tha Kyd", "Syd tha Kyd"],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Matt Martians",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Jasper Dolphin",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "L-Boy",
+  //       otherValues: [],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "Taco",
+  //       otherValues: ["Taco Bennett"],
+  //       minimumFrequency: 1,
+  //     },
+  //     {
+  //       preferredValue: "The Internet",
+  //       otherValues: [],
+  //       minimumFrequency: 0.5,
+  //     },
+  //     {
+  //       preferredValue: "Casey Veggies",
+  //       otherValues: [],
+  //       minimumFrequency: 0.25,
+  //     },
+  //     {
+  //       preferredValue: "Brandun DeShay",
+  //       otherValues: [],
+  //       minimumFrequency: 0.25,
+  //     },
+  //     {
+  //       preferredValue: "The Super 3",
+  //       otherValues: ["The Jet Age of Tomorrow"],
+  //       minimumFrequency: 0,
+  //     },
+  //     {
+  //       preferredValue: "Hal Williams",
+  //       otherValues: [],
+  //       minimumFrequency: 0,
+  //     },
+  //     {
+  //       preferredValue: "Na-kel Smith",
+  //       otherValues: ["Na'kel Smith", "Na-Kel", "Na-Kel Smith"],
+  //       minimumFrequency: 0,
+  //     },
+  //   ],
+  // });
   // await createGroupMembersTestStep({
   //   testContext,
   //   systemPrompt: musicGroupMembersSystemPrompt,
@@ -226,7 +226,10 @@ interface CreateGroupMembersTestStepApi
 function createGroupMembersTestStep(api: CreateGroupMembersTestStepApi) {
   const { testContext, systemPrompt, expectedDistribution, artistName } = api;
   return createGptQueryTestStep({
-    numberOfResults: 5,
+    numberOfResults: 4,
+    maxTokens: 1024,
+    temperature: 1,
+    topProbability: 0.05,
     dataItemSchema: Zod.object({
       groupMembers: Zod.array(Zod.string()),
     }),

@@ -104,6 +104,9 @@ function createArtistTypeTestStep(api: CreateArtistTypeTestStepApi) {
   const { testContext, systemPrompt, expectedDistribution, artistName } = api;
   return createGptQueryTestStep({
     numberOfResults: 1,
+    maxTokens: 256,
+    temperature: 0,
+    topProbability: 1,
     dataItemSchema: Zod.object({
       artistType: Zod.union([Zod.literal("individual"), Zod.literal("group")]),
     }),

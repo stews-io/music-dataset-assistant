@@ -11,6 +11,9 @@ export interface CreateGptQueryTestStepApi<
       | "systemPrompt"
       | "dataItemSchema"
       | "numberOfResults"
+      | "maxTokens"
+      | "temperature"
+      | "topProbability"
       | "getDistributionMap"
       | "expectedDistribution"
     > {}
@@ -26,6 +29,9 @@ export function createGptQueryTestStep<
     systemPrompt,
     dataItemSchema,
     numberOfResults,
+    maxTokens,
+    temperature,
+    topProbability,
     getDistributionMap,
     expectedDistribution,
   } = api;
@@ -38,6 +44,9 @@ export function createGptQueryTestStep<
       systemPrompt,
       dataItemSchema,
       numberOfResults,
+      maxTokens,
+      temperature,
+      topProbability,
       getDistributionMap,
       expectedDistribution,
     },
@@ -49,7 +58,13 @@ interface TestGptQueryApi<
   SomeExpectedDistribution extends ExpectedDistribution<any>
 > extends Pick<
     QueryGptDataApi<GptMessageData>,
-    "userQuery" | "systemPrompt" | "dataItemSchema" | "numberOfResults"
+    | "userQuery"
+    | "systemPrompt"
+    | "dataItemSchema"
+    | "numberOfResults"
+    | "maxTokens"
+    | "temperature"
+    | "topProbability"
   > {
   expectedDistribution: SomeExpectedDistribution;
   getDistributionMap: (
@@ -66,6 +81,9 @@ async function testGptQuery<
     systemPrompt,
     dataItemSchema,
     numberOfResults,
+    maxTokens,
+    temperature,
+    topProbability,
     getDistributionMap,
     expectedDistribution,
   } = api;
@@ -74,6 +92,9 @@ async function testGptQuery<
     systemPrompt,
     dataItemSchema,
     numberOfResults,
+    maxTokens,
+    temperature,
+    topProbability,
   });
   const expectedDistributionMap =
     expectedDistribution.reduce<ExpectedDistributionMap>(
@@ -89,6 +110,7 @@ async function testGptQuery<
       {}
     );
   const distributionMap = getDistributionMap(queriedGptData);
+  console.log(distributionMap);
   const distributionAnalysis = Object.entries(distributionMap).reduce<
     DistributionAnalysis<
       (typeof expectedDistribution)[number]["preferredValue"]
@@ -183,6 +205,9 @@ async function testGptQuery<
 
 interface QueryGptDataApi<GptMessageData> {
   numberOfResults: number;
+  maxTokens: number;
+  topProbability: number;
+  temperature: number;
   systemPrompt: string;
   userQuery: string;
   dataItemSchema: Zod.ZodType<GptMessageData>;
@@ -191,7 +216,15 @@ interface QueryGptDataApi<GptMessageData> {
 async function queryGptData<GptMessageData>(
   api: QueryGptDataApi<GptMessageData>
 ): Promise<Array<GptMessageData>> {
-  const { numberOfResults, systemPrompt, userQuery, dataItemSchema } = api;
+  const {
+    maxTokens,
+    temperature,
+    topProbability,
+    numberOfResults,
+    systemPrompt,
+    userQuery,
+    dataItemSchema,
+  } = api;
   const postChatCompletionResponse = await fetch(
     "https://api.openai.com/v1/chat/completions",
     {
@@ -202,9 +235,9 @@ async function queryGptData<GptMessageData>(
       },
       body: JSON.stringify({
         model: "gpt-4",
-        max_tokens: 1024,
-        temperature: 1,
-        top_p: 0.1,
+        max_tokens: maxTokens,
+        temperature: temperature,
+        top_p: topProbability,
         n: numberOfResults,
         messages: [
           {
