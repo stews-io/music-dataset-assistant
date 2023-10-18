@@ -19,7 +19,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     testContext,
     systemPrompt: artistTypeSystemPrompt,
     artistName: "MF Doom",
-    resultExpectedDistribution: [
+    expectedDistribution: [
       {
         preferredValue: "individual",
         otherValues: [],
@@ -31,7 +31,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     testContext,
     systemPrompt: artistTypeSystemPrompt,
     artistName: "Kanye West",
-    resultExpectedDistribution: [
+    expectedDistribution: [
       {
         preferredValue: "individual",
         otherValues: [],
@@ -43,7 +43,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     testContext,
     systemPrompt: artistTypeSystemPrompt,
     artistName: "2Pac",
-    resultExpectedDistribution: [
+    expectedDistribution: [
       {
         preferredValue: "individual",
         otherValues: [],
@@ -55,7 +55,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     testContext,
     systemPrompt: artistTypeSystemPrompt,
     artistName: "Shabazz Palaces",
-    resultExpectedDistribution: [
+    expectedDistribution: [
       {
         preferredValue: "group",
         otherValues: [],
@@ -67,7 +67,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     testContext,
     systemPrompt: artistTypeSystemPrompt,
     artistName: "Digital Underground",
-    resultExpectedDistribution: [
+    expectedDistribution: [
       {
         preferredValue: "group",
         otherValues: [],
@@ -79,7 +79,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     testContext,
     systemPrompt: artistTypeSystemPrompt,
     artistName: "Odd Future",
-    resultExpectedDistribution: [
+    expectedDistribution: [
       {
         preferredValue: "group",
         otherValues: [],
@@ -95,25 +95,24 @@ interface CreateArtistTypeTestStepApi
       { artistType: "individual" | "group" },
       ExpectedDistribution<"individual" | "group">
     >,
-    "testContext" | "systemPrompt" | "resultExpectedDistribution"
+    "testContext" | "systemPrompt" | "expectedDistribution"
   > {
   artistName: string;
 }
 
 function createArtistTypeTestStep(api: CreateArtistTypeTestStepApi) {
-  const { testContext, systemPrompt, resultExpectedDistribution, artistName } =
-    api;
+  const { testContext, systemPrompt, expectedDistribution, artistName } = api;
   return createGptQueryTestStep({
     numberOfResults: 1,
     dataItemSchema: Zod.object({
       artistType: Zod.union([Zod.literal("individual"), Zod.literal("group")]),
     }),
-    getResultDistributionMap: (someGptMusicArtistType) => ({
-      [someGptMusicArtistType[0].artistType]: 1,
+    getDistributionMap: (someGptMusicArtistType) => ({
+      [someGptMusicArtistType[0]!.artistType]: 1,
     }),
     testContext,
     systemPrompt,
-    resultExpectedDistribution,
+    expectedDistribution,
     stepName: artistName,
     userQuery: `Calculate "${artistName}"`,
   });

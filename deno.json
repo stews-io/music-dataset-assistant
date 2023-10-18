@@ -1,4 +1,7 @@
 {
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true
+  },
   "fmt": {
     "useTabs": false,
     "singleQuote": true,
