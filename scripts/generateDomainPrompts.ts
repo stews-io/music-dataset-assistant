@@ -44,6 +44,15 @@ async function generateDomainPrompts(api: GenerateDomainPromptsApi) {
         "./GptMusicGroupMembers.ts"
       ),
     }),
+    generateSystemPrompt({
+      generatedAssetsDirectoryPath,
+      baseSystemPromptText,
+      domainKey: "musicDiscography",
+      domainTypesPath: getJoinedPath(
+        sourceAssetsDirectoryPath,
+        "./GptMusicDiscography.ts"
+      ),
+    }),
   ]);
 }
 
