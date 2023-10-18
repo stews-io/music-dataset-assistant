@@ -21,7 +21,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     artistName: "MF Doom",
     expectedDistribution: [
       {
-        preferredValue: "individual",
+        preferredValue: "solo",
         otherValues: [],
         minimumFrequency: 1.0,
       },
@@ -33,7 +33,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     artistName: "Kanye West",
     expectedDistribution: [
       {
-        preferredValue: "individual",
+        preferredValue: "solo",
         otherValues: [],
         minimumFrequency: 1.0,
       },
@@ -45,7 +45,7 @@ Deno.test("Query Music Artist Type", async (testContext) => {
     artistName: "2Pac",
     expectedDistribution: [
       {
-        preferredValue: "individual",
+        preferredValue: "solo",
         otherValues: [],
         minimumFrequency: 1.0,
       },
@@ -92,8 +92,8 @@ Deno.test("Query Music Artist Type", async (testContext) => {
 interface CreateArtistTypeTestStepApi
   extends Pick<
     CreateGptQueryTestStepApi<
-      { artistType: "individual" | "group" },
-      ExpectedDistribution<"individual" | "group">
+      { artistType: "solo" | "group" },
+      ExpectedDistribution<"solo" | "group">
     >,
     "testContext" | "systemPrompt" | "expectedDistribution"
   > {
@@ -108,7 +108,7 @@ function createArtistTypeTestStep(api: CreateArtistTypeTestStepApi) {
     temperature: 0,
     topProbability: 1,
     dataItemSchema: Zod.object({
-      artistType: Zod.union([Zod.literal("individual"), Zod.literal("group")]),
+      artistType: Zod.union([Zod.literal("solo"), Zod.literal("group")]),
     }),
     getDistributionMap: (someGptMusicArtistType) => ({
       [someGptMusicArtistType[0]!.artistType]: 1,

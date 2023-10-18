@@ -53,7 +53,7 @@ export function createGptQueryTestStep<
   });
 }
 
-interface TestGptQueryApi<
+export interface TestGptQueryApi<
   GptMessageData,
   SomeExpectedDistribution extends ExpectedDistribution<any>
 > extends Pick<
@@ -72,7 +72,7 @@ interface TestGptQueryApi<
   ) => DistributionMap;
 }
 
-async function testGptQuery<
+export async function testGptQuery<
   GptMessageData,
   QueryExpectedDistribution extends ExpectedDistribution<any>
 >(api: TestGptQueryApi<GptMessageData, QueryExpectedDistribution>) {

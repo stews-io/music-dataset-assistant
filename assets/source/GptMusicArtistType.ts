@@ -1,4 +1,4 @@
 interface GptMusicArtistType {
-  // a calculated binary value where the artist is either an individual person or a group of people
-  artistType: "individual" | "group";
+  // a binary value where the artist is either a "solo" act or "group" act
+  artistType: "solo" | "group";
 }
