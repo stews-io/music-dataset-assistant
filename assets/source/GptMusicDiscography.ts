@@ -1,7 +1,9 @@
 interface GptDiscographyAlbums {
   // the complete list, with zero omissions, of every album title in the artist's discography
-  discographyAlbums: Array<string>;
+  discographyAlbums: Array<AlbumTitle>;
 }
+
+type AlbumTitle = string;
 
 interface GptDiscographyMixtapes {
   // the complete list, with zero omissions, of every mixtape title in the artist's discography
@@ -16,9 +18,4 @@ interface GptDiscographyEps {
 interface GptDiscographySingles {
   // the complete list, with zero omissions, of every single title in the artist's discography
   discographySingles: Array<string>;
-}
-
-interface GptDiscographyNotableWorks {
-  // the complete list, with zero omissions, of every notable work title in the artist's discography
-  discographyNotableWorks: Array<string>;
 }

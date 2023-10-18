@@ -1,57 +1,5 @@
 import * as Zod from "https://deno.land/x/zod@v3.22.4/mod.ts";
-import { CreateTestStepApi, createTestStep, throwError } from "./general.ts";
-
-export interface CreateGptQueryTestStepApi<
-  GptMessageData,
-  ResultExpectedDistribution extends ExpectedDistribution<any>
-> extends Pick<CreateTestStepApi<any>, "testContext" | "stepName">,
-    Pick<
-      TestGptQueryApi<GptMessageData, ResultExpectedDistribution>,
-      | "userQuery"
-      | "systemPrompt"
-      | "dataItemSchema"
-      | "numberOfResults"
-      | "maxTokens"
-      | "temperature"
-      | "topProbability"
-      | "getDistributionMap"
-      | "expectedDistribution"
-    > {}
-
-export function createGptQueryTestStep<
-  GptMessageData,
-  ResultExpectedDistribution extends ExpectedDistribution<any>
->(api: CreateGptQueryTestStepApi<GptMessageData, ResultExpectedDistribution>) {
-  const {
-    stepName,
-    testContext,
-    userQuery,
-    systemPrompt,
-    dataItemSchema,
-    numberOfResults,
-    maxTokens,
-    temperature,
-    topProbability,
-    getDistributionMap,
-    expectedDistribution,
-  } = api;
-  return createTestStep({
-    stepWorker: testGptQuery<GptMessageData, ResultExpectedDistribution>,
-    stepName,
-    testContext,
-    workerApi: {
-      userQuery,
-      systemPrompt,
-      dataItemSchema,
-      numberOfResults,
-      maxTokens,
-      temperature,
-      topProbability,
-      getDistributionMap,
-      expectedDistribution,
-    },
-  });
-}
+import { throwError } from "./general.ts";
 
 export interface TestGptQueryApi<
   GptMessageData,
@@ -110,7 +58,6 @@ export async function testGptQuery<
       {}
     );
   const distributionMap = getDistributionMap(queriedGptData);
-  console.log(distributionMap);
   const distributionAnalysis = Object.entries(distributionMap).reduce<
     DistributionAnalysis<
       (typeof expectedDistribution)[number]["preferredValue"]
@@ -321,10 +268,22 @@ type DistributionItemTotal = number;
 
 export type ExpectedDistribution<ItemValue> = Array<ExpectedItem<ItemValue>>;
 
-interface ExpectedItem<ItemValue> {
+export interface ExpectedItem<ItemValue> {
   minimumFrequency: number;
   preferredValue: ItemValue;
   otherValues: Array<ItemValue>;
+}
+
+export function expectedItem<ItemValue>(
+  preferredValue: ItemValue,
+  minimumFrequency: number = 1,
+  otherValues: Array<ItemValue> = []
+) {
+  return {
+    preferredValue,
+    minimumFrequency,
+    otherValues,
+  };
 }
 
 type ExpectedDistributionMap = Record<ItemValueAsString, ExpectedItemIndex>;
