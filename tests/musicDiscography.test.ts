@@ -154,128 +154,125 @@ Deno.test({ name: "Query Discography: Kanye West" }, async (testContext) => {
   });
 });
 
-Deno.test(
-  { name: "Query Discography: Mac Miller", only: true },
-  async (testContext) => {
-    const musicDiscographySystemPrompt = await Deno.readTextFile(
-      "./assets/generated/musicDiscography-system-prompt.md"
-    );
-    await testContext.step("Albums", async () => {
-      await Promise.all([
-        testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
-          systemPrompt: musicDiscographySystemPrompt,
-          discographyKeySuffix: "Albums",
-          discographyQuerySuffix:
-            "Studio, Collaborative, and Compilation Albums Excluding Mixtapes and Live Albums",
-          artistName: "Mac Miller",
-          expectedDistribution: [
-            expectedItem("Blue Slide Park"),
-            expectedItem("Watching Movies with the Sound Off"),
-            expectedItem("GO:OD AM"),
-            expectedItem("The Divine Feminine"),
-            expectedItem("Swimming"),
-            expectedItem("Circles"),
-          ],
-        }),
-        testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
-          systemPrompt: musicDiscographySystemPrompt,
-          discographyKeySuffix: "Albums",
-          discographyQuerySuffix: "Live Albums",
-          artistName: "Mac Miller",
-          expectedDistribution: [expectedItem("Live from Space")],
-        }),
-      ]);
-    });
-    await testContext.step("Mixtapes", async () => {
-      await testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
+Deno.test({ name: "Query Discography: Mac Miller" }, async (testContext) => {
+  const musicDiscographySystemPrompt = await Deno.readTextFile(
+    "./assets/generated/musicDiscography-system-prompt.md"
+  );
+  await testContext.step("Albums", async () => {
+    await Promise.all([
+      testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
         systemPrompt: musicDiscographySystemPrompt,
-        discographyKeySuffix: "Mixtapes",
-        discographyQuerySuffix: "Mixtapes",
+        discographyKeySuffix: "Albums",
+        discographyQuerySuffix:
+          "Studio, Collaborative, and Compilation Albums Excluding Mixtapes and Live Albums",
         artistName: "Mac Miller",
         expectedDistribution: [
-          expectedItem("But My Mackin' Ain't Easy"),
-          expectedItem("The Jukebox: Prelude to Class Clown"),
-          expectedItem("The High Life"),
-          expectedItem("K.I.D.S."),
-          expectedItem("Best Day Ever"),
-          expectedItem("I Love Life, Thank You"),
-          expectedItem("Macadelic"),
-          expectedItem("Run-On Sentences, Vol. 1"),
-          expectedItem("Stolen Youth"),
-          expectedItem("Faces"),
-          expectedItem("Run-On Sentences, Vol. 2"),
-        ],
-      });
-    });
-    await testContext.step("Eps", async () => {
-      await testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
-        systemPrompt: musicDiscographySystemPrompt,
-        discographyKeySuffix: "Eps",
-        discographyQuerySuffix: "Eps Excluding Mixtapes and Live Albums",
-        artistName: "Mac Miller",
-        expectedDistribution: [
-          expectedItem("On and On and Beyond"),
-          expectedItem("You"),
-        ],
-      });
-    });
-    await testContext.step("Singles", async () => {
-      await testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
-        systemPrompt: musicDiscographySystemPrompt,
-        discographyKeySuffix: "Singles",
-        discographyQuerySuffix: "Singles",
-        artistName: "Mac Miller",
-        expectedDistribution: [
-          expectedItem("Knock Knock"),
-          expectedItem("Frick Park Market"),
-          expectedItem("Party on Fifth Ave."),
-          expectedItem("Missed Calls"),
-          expectedItem("Loud"),
-          expectedItem("S.D.S."),
-          expectedItem("Watching Movies"),
-          expectedItem("Goosebumpz"),
-          expectedItem("Objects in the Mirror"),
-          expectedItem("The Star Room"),
-          expectedItem("Youforia"),
-          expectedItem("Diablo"),
-          expectedItem("Weekend"),
-          expectedItem("100 Grandkids"),
-          expectedItem("Clubhouse"),
-          expectedItem("Brand Name"),
-          expectedItem("Two Matches"),
-          expectedItem("Rush Hour"),
-          expectedItem("Dang!"),
-          expectedItem("Stay"),
-          expectedItem("My Favorite Part"),
-          expectedItem("Cinderella"),
-          expectedItem("What's the Use?"),
-          expectedItem("Self Care"),
-          expectedItem("Small Worlds"),
-          expectedItem("Dunno"),
-          expectedItem("Good News"),
-          expectedItem("Blue World"),
+          expectedItem("Blue Slide Park"),
+          expectedItem("Watching Movies with the Sound Off"),
+          expectedItem("GO:OD AM"),
+          expectedItem("The Divine Feminine"),
+          expectedItem("Swimming"),
           expectedItem("Circles"),
-          expectedItem("Right"),
-          expectedItem("I Am Who Am (Killin' Time)"),
-          expectedItem("We"),
-          expectedItem("Hurt Feelings"),
-          expectedItem("Wings"),
-          expectedItem("Ladders"),
-          expectedItem("Buttons"),
-          expectedItem("Programs"),
-          expectedItem("Everybody"),
-          expectedItem("That's on Me"),
-          expectedItem("Hands"),
-          expectedItem("Surf"),
-          expectedItem("Once a Day"),
-          expectedItem("Floating"),
-          expectedItem("Woods"),
-          expectedItem("Hand Me Downs"),
         ],
-      });
+      }),
+      testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
+        systemPrompt: musicDiscographySystemPrompt,
+        discographyKeySuffix: "Albums",
+        discographyQuerySuffix: "Live Albums",
+        artistName: "Mac Miller",
+        expectedDistribution: [expectedItem("Live from Space")],
+      }),
+    ]);
+  });
+  await testContext.step("Mixtapes", async () => {
+    await testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
+      systemPrompt: musicDiscographySystemPrompt,
+      discographyKeySuffix: "Mixtapes",
+      discographyQuerySuffix: "Mixtapes",
+      artistName: "Mac Miller",
+      expectedDistribution: [
+        expectedItem("But My Mackin' Ain't Easy"),
+        expectedItem("The Jukebox: Prelude to Class Clown"),
+        expectedItem("The High Life"),
+        expectedItem("K.I.D.S."),
+        expectedItem("Best Day Ever"),
+        expectedItem("I Love Life, Thank You"),
+        expectedItem("Macadelic"),
+        expectedItem("Run-On Sentences, Vol. 1"),
+        expectedItem("Stolen Youth"),
+        expectedItem("Faces"),
+        expectedItem("Run-On Sentences, Vol. 2"),
+      ],
     });
-  }
-);
+  });
+  await testContext.step("Eps", async () => {
+    await testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
+      systemPrompt: musicDiscographySystemPrompt,
+      discographyKeySuffix: "Eps",
+      discographyQuerySuffix: "Eps Excluding Mixtapes and Live Albums",
+      artistName: "Mac Miller",
+      expectedDistribution: [
+        expectedItem("On and On and Beyond"),
+        expectedItem("You"),
+      ],
+    });
+  });
+  await testContext.step("Singles", async () => {
+    await testMusicDiscographyQuery<{ discographyAlbums: Array<string> }>({
+      systemPrompt: musicDiscographySystemPrompt,
+      discographyKeySuffix: "Singles",
+      discographyQuerySuffix: "Singles",
+      artistName: "Mac Miller",
+      expectedDistribution: [
+        expectedItem("Knock Knock"),
+        expectedItem("Frick Park Market"),
+        expectedItem("Party on Fifth Ave."),
+        expectedItem("Missed Calls"),
+        expectedItem("Loud"),
+        expectedItem("S.D.S."),
+        expectedItem("Watching Movies"),
+        expectedItem("Goosebumpz"),
+        expectedItem("Objects in the Mirror"),
+        expectedItem("The Star Room"),
+        expectedItem("Youforia"),
+        expectedItem("Diablo"),
+        expectedItem("Weekend"),
+        expectedItem("100 Grandkids"),
+        expectedItem("Clubhouse"),
+        expectedItem("Brand Name"),
+        expectedItem("Two Matches"),
+        expectedItem("Rush Hour"),
+        expectedItem("Dang!"),
+        expectedItem("Stay"),
+        expectedItem("My Favorite Part"),
+        expectedItem("Cinderella"),
+        expectedItem("What's the Use?"),
+        expectedItem("Self Care"),
+        expectedItem("Small Worlds"),
+        expectedItem("Dunno"),
+        expectedItem("Good News"),
+        expectedItem("Blue World"),
+        expectedItem("Circles"),
+        expectedItem("Right"),
+        expectedItem("I Am Who Am (Killin' Time)"),
+        expectedItem("We"),
+        expectedItem("Hurt Feelings"),
+        expectedItem("Wings"),
+        expectedItem("Ladders"),
+        expectedItem("Buttons"),
+        expectedItem("Programs"),
+        expectedItem("Everybody"),
+        expectedItem("That's on Me"),
+        expectedItem("Hands"),
+        expectedItem("Surf"),
+        expectedItem("Once a Day"),
+        expectedItem("Floating"),
+        expectedItem("Woods"),
+        expectedItem("Hand Me Downs"),
+      ],
+    });
+  });
+});
 
 interface TestMusicDiscographyQueryApi<GptMessageData>
   extends Pick<

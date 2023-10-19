@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "noUncheckedIndexedAccess": true
   },
   "fmt": {
@@ -15,6 +17,20 @@
   },
   "tasks": {
     "generateDomainPrompts": "deno run -A ./scripts/generateDomainPrompts.ts",
-    "runTests": "deno test -A ./tests"
+    "buildClient": "deno run -A ./scripts/buildClient.ts",
+    "serveClient": "deno run -A ./scripts/serveClient.ts ./__build",
+    "buildAndServeClient": "deno task buildClient && deno task serveClient"
+  },
+  "imports": {
+    "CssModule": "./declaration.d.ts",
+    "preact": "https://esm.sh/preact@10.17.1",
+    "preact/hooks": "https://esm.sh/preact@10.17.1/hooks",
+    "preact/jsx-runtime": "https://esm.sh/preact@10.17.1/jsx-runtime",
+    "preact-render-to-string": "https://esm.sh/preact-render-to-string@6.2.1?deps=preact@10.17.1",
+    "esbuild": "https://deno.land/x/esbuild@v0.19.2/mod.js",
+    "esbuild_deno_loader": "https://raw.githubusercontent.com/stews-io/esbuild_deno_loader/fix/allow-css-passthrough/mod.ts",
+    "path-to-regexp": "https://esm.sh/path-to-regexp@6.2.1",
+    "deno_std/": "https://deno.land/std@0.204.0/",
+    "library/": "./library/"
   }
 }
